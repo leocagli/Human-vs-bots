@@ -1,4 +1,5 @@
 # Human-vs-bots
+![Uploading Gemini_Generated_Image_2ccjtu2ccjtu2ccj.png…]()
 
 Turn-based strategy game with a Web3-ready flow on Stellar.
 
