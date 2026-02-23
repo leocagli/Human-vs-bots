@@ -1,224 +1,88 @@
 # Human-vs-bots
 
-Juego Web3 sobre Stellar con integración Zero-Knowledge (ZK): una arena en tiempo real donde pones a prueba tu estrategia contra agentes.
+Turn-based strategy game with a Web3-ready flow on Stellar.
 
-## 🎮 Objetivo
+## What this project is
 
-`Human-vs-bots` está pensado para ejecutarse como juego con frontend + contratos Soroban compilados a WASM.
+`Human-vs-bots` is a browser game with:
 
-## ⚡ Quickstart (WASM)
+- Hex map battles (movement, attack, territory capture)
+- Building-based production (human buildings vs bot tech core)
+- Two battle modes:
+  - **Human vs LLM**
+  - **LLM vs LLM** simulation
+- Popular LLM profiles as opponents with visible difficulty labels
+- Side drawer UI, map zoom, and tactical match stats
 
-Esta guía resume el flujo recomendado para levantar el proyecto rápido.
+## Run locally (direct game entry)
 
-### 0) Flujo recomendado en este repo
-
-Este repositorio incluye un wrapper para automatizar el uso de Stellar Game Studio:
-
-- `scripts/game-studio.sh`
-
-Comandos disponibles:
-
-```bash
-./scripts/game-studio.sh init
-./scripts/game-studio.sh setup
-./scripts/game-studio.sh create human-vs-bots
-./scripts/game-studio.sh dev human-vs-bots
-./scripts/game-studio.sh build human-vs-bots
-./scripts/game-studio.sh deploy human-vs-bots
-./scripts/game-studio.sh publish human-vs-bots
-```
-
-Por defecto clona/actualiza Game Studio en `.stellar-game-studio`.
-
-Si quieres otra ruta:
-
-```bash
-STELLAR_STUDIO_DIR=/ruta/custom ./scripts/game-studio.sh setup
-```
-
-### 1) Requisitos
-
-Instala estas herramientas:
-
-- [Bun](https://bun.sh/) (scripts y frontend)
-- [Rust + Cargo](https://rustup.rs/) (compilación de contratos)
-- [Stellar CLI](https://developers.stellar.org/docs/tools/stellar-cli) (deploy)
-- Target Rust `wasm32v1-none`
-
-Comandos (Linux/macOS/WSL):
-
-```bash
-curl -fsSL https://bun.sh/install | bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-cargo install --locked stellar-cli --features opt
-rustup target add wasm32v1-none
-```
-
-> En Windows usa **WSL** para ejecutar `bun`, `cargo` y `stellar` de forma confiable.
-
-### 2) Clonar el Game Studio (manual, opcional)
-
-```bash
-git clone https://github.com/jamesbachini/Stellar-Game-Studio.git
-cd Stellar-Game-Studio
-```
-
-### 3) Setup automático (build + deploy + frontend)
-
-```bash
-./scripts/game-studio.sh setup
-```
-
-Este comando normalmente hace:
-
-- Build de contratos Soroban a WASM
-- Creación de cuentas de prueba (`admin`, `player1`, `player2`)
-- Deploy en Stellar testnet
-- Generación de bindings TypeScript
-- Configuración de variables de entorno
-- Instalación de dependencias frontend
-
-## 🧩 Crear o preparar el juego
-
-### Crear un juego nuevo
-
-```bash
-./scripts/game-studio.sh create my-game
-```
-
-### Correr en desarrollo (WASM + frontend)
-
-```bash
-./scripts/game-studio.sh dev my-game
-```
-
-Servidor local esperado:
-
-- `https://localhost:3000`
-
-## 🔁 Build / Deploy iterativo
-
-Cuando hagas cambios:
-
-```bash
-./scripts/game-studio.sh build my-game
-./scripts/game-studio.sh deploy my-game
-```
-
-## 🚀 Publicación
-
-Exporta frontend listo para producción (wallets externas como Freighter):
-
-```bash
-./scripts/game-studio.sh publish my-game
-```
-
-## 🔐 Integración Zero-Knowledge
-
-Opciones sugeridas en Stellar:
-
-1. **RISC Zero**
-	- Docs: https://dev.risczero.com/
-	- Verifier: https://github.com/NethermindEth/stellar-risc0-verifier/
-
-2. **Noir**
-	- Docs: https://noir-lang.org/docs/
-	- Verifier: https://github.com/yugocabrio/rs-soroban-ultrahonk
-
-> Nota: El soporte de Noir en Stellar puede ser más limitado por restricciones de cómputo on-chain.
-
-## 📌 Requisito de contrato mock (hackathon)
-
-Los contratos del juego deben invocar `start_game()` y `end_game()` en el contrato mock de testnet:
-
-`CB4VZAT2U3UC6XFK3N23SKRF2NDCMP3QHJYMCHHFMZO7MRQO6DQ2EMYG`
-
-## 📚 Referencia oficial
-
-- Quickstart original: https://dorahacks.io/hackathon/stellar-hacks-zk-gaming/quickstart-guide
-
-## ✅ Flujo mínimo recomendado
-
-```bash
-./scripts/game-studio.sh setup
-./scripts/game-studio.sh create my-game
-./scripts/game-studio.sh dev my-game
-```
-
-Si quieres ejecutar específicamente este proyecto bajo el nombre `human-vs-bots`, usa:
-
-```bash
-./scripts/game-studio.sh dev human-vs-bots
-```
-
-## 🧰 VS Code Tasks
-
-También puedes correr todo desde **Run Task** en VS Code (`Terminal > Run Task`):
-
-- `WASM: Init Game Studio`
-- `WASM: Setup`
-- `WASM: Create human-vs-bots`
-- `WASM: Dev human-vs-bots`
-- `WASM: Build human-vs-bots`
-- `WASM: Deploy human-vs-bots`
-- `WASM: Publish human-vs-bots`
-- `Demo: Open Zemeroth`
-
-## 🕹️ Demo por defecto: Zemeroth (WASM)
-
-Este repositorio incluye una versión demo de Zemeroth compilada a WASM para usarla como base estratégica visual mientras se integra la capa Web3.
-
-- Ruta: `demo/zemeroth-demo/index.html`
-- Fuente: https://github.com/ozkriff/zemeroth
-- Licencias: MIT / Apache-2.0 (ver archivos `THIRD_PARTY_ZEMEROTH_LICENSE_*`)
-- Estado: compilado para navegador con `wasm32-unknown-unknown`
-
-Abrir por `file://` (rápido):
-
-```bash
-"$BROWSER" file:///workspaces/Human-vs-bots/demo/zemeroth-demo/index.html
-```
-
-Servir por HTTP (recomendado):
-
-```bash
-./scripts/serve-zemeroth.sh 4180
-"$BROWSER" http://127.0.0.1:4180
-```
-
-Acceso por defecto desde la raíz del repo:
+From repo root:
 
 ```bash
 python3 -m http.server 4180 --directory /workspaces/Human-vs-bots
-"$BROWSER" http://127.0.0.1:4180
+"$BROWSER" http://127.0.0.1:4180/
 ```
 
-La raíz redirige automáticamente a `demo/zemeroth-demo/`.
+Root (`/`) redirects directly to the game.
 
-## 🧪 Demo alternativa: CIV Minimal Lite
+Main game route:
 
-- Ruta: `demo/civ-lite/index.html`
-- Mantiene la implementación original del prototipo Human vs Bots para iterar mecánicas y UI.
+- `demo/zemeroth-demo/index.html`
 
-## 🧠 Referencias analizadas y mejoras aplicadas
+Alternative prototype route:
 
-Repos revisados:
+- `demo/civ-lite/index.html`
 
-- https://github.com/C7-Game/Prototype
-- https://github.com/yairm210/Unciv
-- https://github.com/freeciv/freeciv
-- https://openciv3.org/
+## Gameplay overview
 
-Mejoras trasladadas al mock (sin copiar código):
+- Select mode: **Human vs LLM** or **LLM vs LLM**
+- Choose models and map difficulty
+- Start match, control turns, produce units, and capture land
+- Win by elimination or territory dominance
 
-- Separación lógica de turno vs render visual (patrón engine/UI)
-- Pathfinding A* para movimiento con coste de terreno
-- IA por prioridades (captura > combate > presión territorial)
-- Capas tácticas de visualización (niebla de guerra, ruta, minimapa)
-- Animación de movimiento para feedback de acciones
+## LLM opponents currently available
 
-Siguiente integración recomendada con Stellar Game Studio:
+- Claude 3.5 Sonnet (Hard)
+- Claude 3 Opus (Very Hard)
+- Clawbot v2 (Medium)
+- OpenAI GPT-4o (Hard)
+- OpenAI GPT-4.1 mini (Medium)
+- OpenAI o1-mini (Very Hard)
 
-- Encapsular estado/acciones del turno para serializarlas a contrato Soroban
-- Mantener el renderer `canvas` como frontend y enviar `start_game/end_game` al mock hub
-- Añadir verificación deterministic-friendly para resolver combate fuera de UI
+## Web3 / ZK flow in the demo
+
+UI includes:
+
+- Wallet connection
+- Match lifecycle (`start_game`, turn progression, `end_game`)
+- Proof snapshot generation and export (`JSON`)
+
+The flow is aligned with Stellar hackathon architecture and is prepared for deeper contract integration.
+
+## Screenshots
+
+> Add the screenshots you shared under `docs/screenshots/` using the filenames below.
+
+![Main Gameplay](docs/screenshots/main-gameplay.png)
+![Menu Reference](docs/screenshots/menu-reference.png)
+![LLM Setup](docs/screenshots/llm-setup.png)
+
+## Useful scripts
+
+- `scripts/serve-demos.sh`
+- `scripts/serve-zemeroth.sh`
+- `scripts/serve-civ-lite.sh`
+- `scripts/game-studio.sh`
+
+## Third-party references and licenses
+
+- Unciv assets inspiration (visual assets used in demo pipeline)
+- Zemeroth reference integration path
+- Stellar/Game Studio quickstart alignment
+
+License files in repo root:
+
+- `THIRD_PARTY_UNCIV_LICENSE.txt`
+- `THIRD_PARTY_ZEMEROTH_LICENSE_MIT.txt`
+- `THIRD_PARTY_ZEMEROTH_LICENSE_APACHE.txt`
+- `THIRD_PARTY_STELLAR_LICENSE.txt`
