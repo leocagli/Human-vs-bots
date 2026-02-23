@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human vs Bots</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <header class="topbar">
+        <div>
+            <h1>Human vs Bots</h1>
+            <p class="subtitle">Stellar Game Flow • ZK Ready</p>
+        </div>
+        <div class="badge" id="walletState">Wallet: Disconnected</div>
+    </header>
+
+    <main class="layout">
+        <section class="arena-wrap">
+            <canvas id="arena" width="1280" height="768"></canvas>
+            <div class="overlay" id="resultBanner"></div>
+        </section>
+
+        <aside class="panel-drawer" id="panelDrawer">
+            <button class="drawer-toggle" id="btnTogglePanel" type="button">☰ Menu</button>
+            <div class="panel">
+                <details class="menu-group" open>
+                    <summary>Versus Setup</summary>
+                    <div class="group-body">
+                        <label class="field-label" for="modeSelect">Battle Mode</label>
+                        <select id="modeSelect">
+                            <option value="human-vs-llm" selected>Human vs LLM</option>
+                            <option value="llm-vs-llm">LLM vs LLM</option>
+                        </select>
+
+                        <label class="field-label" for="llmHumanSelect">LLM A (for LLM vs LLM)</label>
+                        <select id="llmHumanSelect">
+                            <option value="claude-3-5-sonnet">Claude 3.5 Sonnet (Hard)</option>
+                            <option value="claude-3-opus">Claude 3 Opus (Very Hard)</option>
+                            <option value="clawbot-v2">Clawbot v2 (Medium)</option>
+                            <option value="gpt-4o">OpenAI GPT-4o (Hard)</option>
+                            <option value="gpt-4.1-mini">OpenAI GPT-4.1 mini (Medium)</option>
+                            <option value="o1-mini">OpenAI o1-mini (Very Hard)</option>
+                        </select>
+
+                        <label class="field-label" for="aiSelect">Opponent LLM</label>
+                        <select id="aiSelect">
+                            <option value="claude-3-5-sonnet" selected>Claude 3.5 Sonnet (Hard)</option>
+                            <option value="claude-3-opus">Claude 3 Opus (Very Hard)</option>
+                            <option value="clawbot-v2">Clawbot v2 (Medium)</option>
+                            <option value="gpt-4o">OpenAI GPT-4o (Hard)</option>
+                            <option value="gpt-4.1-mini">OpenAI GPT-4.1 mini (Medium)</option>
+                            <option value="o1-mini">OpenAI o1-mini (Very Hard)</option>
+                        </select>
+                        <label class="field-label" for="difficultySelect">Map Difficulty</label>
+                        <select id="difficultySelect">
+                            <option value="easy">Easy</option>
+                            <option value="normal" selected>Normal</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    </div>
+                </details>
+
+                <details class="menu-group" open>
+                    <summary>Match Control</summary>
+                    <div class="group-body">
+                        <button id="btnConnect" class="action-wallet">Connect Wallet</button>
+                        <button id="btnStart" class="action-start">Start Game</button>
+                        <button id="btnEndTurn" class="action-end">End Turn</button>
+
+                        <label class="field-label">Map Zoom</label>
+                        <div class="zoom-row">
+                            <button id="btnZoomOut" type="button" class="zoom-btn">−</button>
+                            <button id="btnZoomReset" type="button" class="zoom-btn">100%</button>
+                            <button id="btnZoomIn" type="button" class="zoom-btn">+</button>
+                        </div>
+
+                        <label class="field-label" for="buildingSelect">Human Building</label>
+                        <select id="buildingSelect">
+                            <option value="barracks">Barracks (Warrior)</option>
+                            <option value="factory">Factory (Car)</option>
+                        </select>
+                        <label class="field-label" for="produceSelect">Produce Unit</label>
+                        <select id="produceSelect">
+                            <option value="warrior">Warrior</option>
+                            <option value="car">Car</option>
+                        </select>
+                        <button id="btnProduce" class="action-produce">Produce Unit</button>
+                        <button id="btnConquer" class="action-conquer">Conquer Tile (uses selected unit action)</button>
+                        <button id="btnProof">Generate ZK Proof</button>
+                        <button id="btnExportProofs">Export Proofs JSON</button>
+                        <button id="btnEnd" class="action-end">End Game</button>
+                        <button id="btnReset">Reset Arena</button>
+
+                        <div class="contract-box">
+                            <span>Testnet Hub Contract</span>
+                            <code>CB4VZAT2U3UC6XFK3N23SKRF2NDCMP3QHJYMCHHFMZO7MRQO6DQ2EMYG</code>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="menu-group" open>
+                    <summary>Match Stats</summary>
+                    <div class="group-body">
+                        <div class="stats">
+                            <div><span>Battle Mode</span><strong id="selectedMode">Human vs LLM</strong></div>
+                            <div><span>LLM A</span><strong id="selectedHumanModel">Claude 3.5 Sonnet</strong></div>
+                            <div><span>Opponent LLM</span><strong id="selectedAI">Claude 3.5 Sonnet</strong></div>
+                            <div><span>Map Difficulty</span><strong id="selectedDifficulty">normal</strong></div>
+                            <div><span>Humans</span><strong id="humansCount">0</strong></div>
+                            <div><span>Bots</span><strong id="botsCount">0</strong></div>
+                            <div><span>Turn</span><strong id="turnCount">0</strong></div>
+                            <div><span>Phase</span><strong id="phaseState">player</strong></div>
+                            <div><span>Human Territory</span><strong id="humanTerritory">0</strong></div>
+                            <div><span>Bot Territory</span><strong id="botTerritory">0</strong></div>
+                            <div><span>Proofs</span><strong id="proofCount">0</strong></div>
+                            <div><span>Match</span><strong id="matchState">Idle</strong></div>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="menu-group" open>
+                    <summary>Event Log</summary>
+                    <div class="group-body">
+                        <div id="log" class="log"></div>
+                    </div>
+                </details>
+
+                <details class="menu-group" open>
+                    <summary>Quickstart Flow</summary>
+                    <div class="group-body">
+                        <div class="flow">
+                            <div><span>1</span><strong>setup</strong><small id="stepSetup">ready</small></div>
+                            <div><span>2</span><strong>create human-vs-bots</strong><small id="stepCreate">ready</small></div>
+                            <div><span>3</span><strong>dev:game human-vs-bots</strong><small id="stepDev">running</small></div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </aside>
+    </main>
+
+    <script type="module" src="./game.js"></script>
+</body>
+</html>

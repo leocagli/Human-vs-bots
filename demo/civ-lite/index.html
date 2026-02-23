@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIV Lite – Human vs Bots</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>⚔️ CIV Lite</h1>
+    <span id="turnLabel">Turn 1</span>
+    <span id="status">Your turn</span>
+  </header>
+
+  <main>
+    <canvas id="gameCanvas"></canvas>
+
+    <aside id="sidebar">
+      <section id="resources">
+        <h3>Empire</h3>
+        <div class="res-row"><span class="res-icon">🌾</span> Food <span id="food">0</span></div>
+        <div class="res-row"><span class="res-icon">⚒️</span> Prod <span id="prod">0</span></div>
+        <div class="res-row"><span class="res-icon">🔬</span> Science <span id="science">0</span></div>
+      </section>
+
+      <section id="unitInfo">
+        <h3>Selected Unit</h3>
+        <div id="unitDetails">
+          <p class="placeholder">Click a unit to see details</p>
+        </div>
+      </section>
+
+      <section id="actions">
+        <button id="btnEndTurn">End Turn (E)</button>
+        <button id="btnCenter">Center (C)</button>
+      </section>
+
+      <section id="minimapBox">
+        <h3>Map</h3>
+        <canvas id="minimap"></canvas>
+      </section>
+
+      <section id="log">
+        <h3>Log</h3>
+        <div id="logContent"></div>
+      </section>
+    </aside>
+  </main>
+
+  <div id="tooltip"></div>
+
+  <script type="module" src="game.js"></script>
+</body>
+</html>

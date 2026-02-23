@@ -1,0 +1,320 @@
+/* ─────────────────────────────────────────────────────
+   CIV Lite – Polished dark-theme UI
+   Inspired by classic 4X game interfaces
+   ───────────────────────────────────────────────────── */
+
+:root {
+  --bg:        #0d1117;
+  --surface:   #161b22;
+  --surface2:  #1c2330;
+  --border:    #30363d;
+  --accent:    #58a6ff;
+  --accent2:   #3fb950;
+  --danger:    #f85149;
+  --gold:      #d29922;
+  --text:      #c9d1d9;
+  --dim:       #8b949e;
+  --radius:    8px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ───── Header ───────────────────────────────────── */
+header {
+  background: linear-gradient(180deg, #1a2233 0%, var(--surface) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+header h1 {
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+  color: var(--accent);
+  text-shadow: 0 0 12px rgba(88,166,255,0.3);
+}
+
+#turnLabel {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+#status {
+  font-size: 0.85rem;
+  color: var(--accent2);
+  margin-left: auto;
+  font-weight: 500;
+}
+
+#status.status-thinking {
+  color: var(--gold);
+  animation: pulse 0.8s ease-in-out infinite;
+}
+
+#status.status-win { color: var(--accent2); }
+#status.status-lose { color: var(--danger); }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ───── Main layout ──────────────────────────────── */
+main {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+#gameCanvas {
+  flex: 1;
+  display: block;
+  cursor: crosshair;
+  min-width: 0;
+  background: #070b14;
+}
+
+/* ───── Sidebar ──────────────────────────────────── */
+#sidebar {
+  width: 240px;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+#sidebar section {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+#sidebar h3 {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--dim);
+  margin-bottom: 8px;
+}
+
+/* ───── Resources ────────────────────────────────── */
+.res-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  padding: 3px 0;
+  color: var(--text);
+}
+
+.res-row span:last-child {
+  margin-left: auto;
+  font-weight: 700;
+  min-width: 28px;
+  text-align: right;
+}
+
+.res-icon { font-size: 0.9rem; }
+
+/* ───── Unit Info ────────────────────────────────── */
+#unitInfo {
+  min-height: 72px;
+}
+
+#unitDetails .placeholder {
+  color: var(--dim);
+  font-size: 0.78rem;
+  font-style: italic;
+}
+
+.unit-info-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.unit-info-header .unit-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+.unit-info-header .unit-name {
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.unit-info-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px 10px;
+  font-size: 0.78rem;
+}
+
+.unit-info-stats .stat-label {
+  color: var(--dim);
+}
+
+.unit-info-stats .stat-val {
+  text-align: right;
+  font-weight: 600;
+}
+
+.stat-val.hp-high { color: var(--accent2); }
+.stat-val.hp-mid  { color: var(--gold); }
+.stat-val.hp-low  { color: var(--danger); }
+
+/* ───── Actions ──────────────────────────────────── */
+#actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+button {
+  background: linear-gradient(180deg, #2a3a52 0%, var(--surface2) 100%);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+button:hover {
+  background: linear-gradient(180deg, #334a66 0%, #263040 100%);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(88,166,255,0.15);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+#btnEndTurn {
+  background: linear-gradient(180deg, #224422 0%, #1a331a 100%);
+  border-color: #2d5a2d;
+}
+
+#btnEndTurn:hover {
+  background: linear-gradient(180deg, #2d5a2d 0%, #224422 100%);
+  border-color: var(--accent2);
+  box-shadow: 0 0 8px rgba(63,185,80,0.2);
+}
+
+/* ───── Minimap ──────────────────────────────────── */
+#minimapBox { padding: 10px 14px; }
+
+#minimap {
+  width: 100%;
+  aspect-ratio: 1.5;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  image-rendering: pixelated;
+  background: #070b14;
+}
+
+/* ───── Log ──────────────────────────────────────── */
+#log {
+  flex: 1;
+  min-height: 80px;
+  overflow: hidden;
+}
+
+#logContent {
+  font-size: 0.72rem;
+  color: var(--dim);
+  max-height: 160px;
+  overflow-y: auto;
+  line-height: 1.45;
+}
+
+#logContent .log-entry {
+  padding: 2px 0;
+  border-bottom: 1px solid rgba(48,54,61,0.3);
+}
+
+#logContent .log-combat { color: var(--danger); }
+#logContent .log-build  { color: var(--accent2); }
+#logContent .log-move   { color: var(--accent); }
+
+/* ───── Tooltip ──────────────────────────────────── */
+#tooltip {
+  position: fixed;
+  pointer-events: none;
+  background: rgba(22,27,34,0.95);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  color: var(--text);
+  max-width: 200px;
+  display: none;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+}
+
+#tooltip .tt-title {
+  font-weight: 700;
+  margin-bottom: 3px;
+  text-transform: capitalize;
+}
+
+#tooltip .tt-yields {
+  display: flex;
+  gap: 8px;
+  font-size: 0.7rem;
+}
+
+#tooltip .tt-yields span {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ───── Scrollbar ────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--dim); }
+
+/* ───── Responsive ───────────────────────────────── */
+@media (max-width: 700px) {
+  main { flex-direction: column; }
+  #sidebar {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-height: 140px;
+    overflow-y: auto;
+  }
+  #sidebar section { flex: 1; min-width: 120px; }
+  #log { display: none; }
+}
