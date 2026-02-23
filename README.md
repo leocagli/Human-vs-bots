@@ -61,11 +61,9 @@ The flow is aligned with Stellar hackathon architecture and is prepared for deep
 
 ## Screenshots
 
-> Add the screenshots you shared under `docs/screenshots/` using the filenames below.
 
 ![Main Gameplay](docs/screenshots/main-gameplay.png)
-![Menu Reference](docs/screenshots/menu-reference.png)
-![LLM Setup](docs/screenshots/llm-setup.png)
+
 
 ## Useful scripts
 
